@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        String   @id @default(cuid()) @map("_id")
+  username  String   @unique
+  password  String
+  isActive  Boolean  @default(false)
+  user      User?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  id         String   @id @default(cuid()) @map("_id")
+  name       String
+  avatar     String
+  email      String   @unique
+  isVerified Boolean  @default(false)
+  accountId  String   @unique
+  account    Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  roleId     String?
+  role       Role?    @relation(fields: [roleId], references: [id], onDelete: SetNull)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Role {
+  id          String      @id @default(cuid()) @map("_id")
+  name        String      @unique
+  description String
+  users       User[]
+  permission  Permission?
+  createdAt   DateTime    @default(now())
+}
+
+model Permission {
+  id        String   @id @default(cuid()) @map("_id")
+  read      Boolean  @default(false)
+  write     Boolean  @default(false)
+  delete    Boolean  @default(false)
+  admin     Boolean  @default(false)
+  roleId    String   @unique
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

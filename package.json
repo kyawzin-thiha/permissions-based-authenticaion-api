@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "build:prisma": "npx prisma db push && npx prisma db seed && npx prisma generate",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -20,6 +21,7 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@prisma/client": "^4.10.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2"
   },
@@ -36,6 +38,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
     "prettier": "^2.3.2",
+    "prisma": "^4.10.1",
     "source-map-support": "^0.5.20",
     "ts-jest": "28.0.8",
     "ts-loader": "^9.2.3",
