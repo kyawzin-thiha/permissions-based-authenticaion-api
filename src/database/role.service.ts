@@ -131,6 +131,9 @@ export class RoleService {
 			});
 			return null;
 		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+				return { message: 'Role already exists', statusCode: 400 };
+			} 
 			return { message: 'Internal server error', statusCode: 500 };
 		}
 	}

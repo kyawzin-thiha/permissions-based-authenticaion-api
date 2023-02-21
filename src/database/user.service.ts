@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from 'src/helper/prisma.service';
 import { UserWithRoleDto } from 'src/types/database.dto';
 import { ErrorDto } from 'src/types/error.dto';
@@ -67,6 +68,19 @@ export class UserService {
 		}
 	}
 
+	async getAllUsers(): Promise<[UserWithRoleDto[], ErrorDto]> {
+		try {
+			const users = await this.prisma.user.findMany({
+				include: {
+					role: true,
+				},
+			});
+			return [users, null];
+		} catch (error) {
+			return [null, { message: 'Internal server error', statusCode: 500 }];
+		}
+	}
+
 	async updateName(id: string, name: string): Promise<ErrorDto> {
 		try {
 			await this.prisma.user.update({
@@ -95,6 +109,9 @@ export class UserService {
 			});
 			return null;
 		} catch (error) {
+			if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+				return { message: 'Email already taken', statusCode: 400 };
+			} 
 			return { message: 'Internal server error', statusCode: 500 };
 		}
 	}
