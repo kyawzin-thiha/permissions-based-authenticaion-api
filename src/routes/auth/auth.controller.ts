@@ -210,8 +210,6 @@ export class AuthController {
 
 		await this.redisService.set(uniqueKey, account.id, 60 * 60 * 24 * 3);
 
-		console.log(uniqueKey);
-
 		const resetPasswordUrl = `${process.env.WEB_URL}/reset-password?key=${uniqueKey}`;
 		const resetPasswordTemplate = process.env.RESET_PASSWORD_TEMPLATE_ID;
 		const resetPasswordData = {

@@ -10,12 +10,10 @@ export class AuthGuard implements CanActivate {
 	) {}
 
 	canActivate(context: ExecutionContext): boolean {
-		console.log("auth guard entered");
 		const type = this.reflector.get<string>(
 			'type',
 			context.getHandler(),
 		);
-		console.log(type)
 		if (type === "Public") {
 			return true;
 		}

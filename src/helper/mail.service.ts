@@ -23,7 +23,6 @@ export class MailService {
 			await sgMail.send(msg);
 			return null;
 		} catch (error) {
-			console.log(error)
 			return { message: 'Server Error', statusCode: 500 };
 		}
 	}

@@ -28,8 +28,7 @@ import { BcryptService } from './bcrypt.service';
 				const client = createClient({
 					url: process.env.REDIS_URL,
 				});
-				client.on('error', (err) => {
-					console.log(err);
+				client.on('error', () => {
 					process.exit(1);
 				});
 				await client.connect();

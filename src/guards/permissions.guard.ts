@@ -10,7 +10,6 @@ export class PermissionGuard implements CanActivate {
 	) {}
 
 	async canActivate(context: ExecutionContext): Promise<boolean> {
-		console.log("permission guard");
 		const requiredPermissions = this.reflector.get<string[]>(
 			'permissions',
 			context.getHandler(),
