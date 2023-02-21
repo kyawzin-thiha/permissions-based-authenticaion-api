@@ -146,6 +146,7 @@ export class AccountService {
 							},
 						},
 					],
+					isActive: true,
 				},
 				include: {
 					user: {
