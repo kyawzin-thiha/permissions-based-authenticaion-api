@@ -22,6 +22,7 @@ export class AwsService {
 			Bucket: process.env.AWS_BUCKET,
 			Key: `${process.env.AWS_S3_FOLDER_PATH}/${username}/${fileName? fileName : file.originalname}`,
 			Body: file.buffer,
+			ContentType: file.mimetype,
 		};
 
 		try {
