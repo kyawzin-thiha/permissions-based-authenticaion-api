@@ -7,8 +7,9 @@
 	"license": "MIT",
 	"scripts": {
 		"prebuild": "rimraf dist",
-		"build": "nest build",
+		"build: api": "nest build",
 		"build:prisma": "npx prisma db push && npx prisma db seed && npx prisma generate",
+		"build": "npm run build:prisma && npm run build:api",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
